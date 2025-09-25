@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Las Estaciones del Año!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-bg: #E1F5FE;
+            --secondary-bg: #81D4FA;
+            --text-dark: #2C3E50;
+            --accent-green: #7BC043;
+            --accent-yellow: #FFC300;
+            --accent-red: #E74C3C;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: white;
+            border: 3px solid var(--accent-green);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .btn-start {
+            background-color: var(--accent-green);
+            color: white;
+        }
+
+        .btn-quiz {
+            background-color: var(--accent-yellow);
+            color: var(--text-dark);
+        }
+
+        .quiz-option {
+            background-color: var(--secondary-bg);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .quiz-option:hover {
+            transform: scale(1.02);
+            background-color: #A5D6A7;
+        }
+
+        .quiz-option.correct {
+            background-color: #A5D6A7;
+            border-color: var(--accent-green);
+        }
+
+        .quiz-option.incorrect {
+            background-color: #EF9A9A;
+            border-color: var(--accent-red);
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 flex justify-center items-center">
+
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcome-page" class="text-center fade-in">
+        <h1 class="text-4xl md:text-6xl font-black mb-4 text-accent-green">¡Hola, pequeño explorador!</h1>
+        <p class="text-xl md:text-2xl mb-8">¿Listo para aprender sobre las estaciones?</p>
+        <button id="start-btn" class="btn btn-start text-2xl animate-pulse">Comenzar</button>
+    </div>
+
+    <!-- Pantalla de Estudio -->
+    <div id="study-page" class="container mx-auto hidden fade-in">
+        <h2 class="text-3xl md:text-5xl font-bold text-center mb-8 text-accent-green">Aprendamos sobre las Estaciones</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <!-- Primavera -->
+            <div class="card rounded-2xl p-4 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Primavera</h3>
+                <img src="https://placehold.co/150x150/DCE775/000000?text=🌸" alt="Primavera" class="w-32 h-32 rounded-full mb-3">
+                <p class="text-lg">Es la estación donde las flores crecen, los días se hacen más largos y el sol calienta un poquito más.</p>
+            </div>
+            <!-- Verano -->
+            <div class="card rounded-2xl p-4 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Verano</h3>
+                <img src="https://placehold.co/150x150/FFEB3B/000000?text=☀️" alt="Verano" class="w-32 h-32 rounded-full mb-3">
+                <p class="text-lg">Es la estación más calurosa del año. ¡Perfecta para ir a la playa o jugar al aire libre!</p>
+            </div>
+            <!-- Otoño -->
+            <div class="card rounded-2xl p-4 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Otoño</h3>
+                <img src="https://placehold.co/150x150/FBC02D/000000?text=🍂" alt="Otoño" class="w-32 h-32 rounded-full mb-3">
+                <p class="text-lg">En esta estación, las hojas de los árboles cambian de color y caen al suelo. ¡El clima se vuelve más fresco!</p>
+            </div>
+            <!-- Invierno -->
+            <div class="card rounded-2xl p-4 flex flex-col items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">Invierno</h3>
+                <img src="https://placehold.co/150x150/90CAF9/000000?text=❄️" alt="Invierno" class="w-32 h-32 rounded-full mb-3">
+                <p class="text-lg">Es la estación más fría. A veces, cae nieve y debemos abrigarnos bien para no sentir frío.</p>
+            </div>
+        </div>
+        <div class="text-center mt-10">
+            <button id="go-to-quiz-btn" class="btn btn-quiz text-2xl">¡Vamos a la Evaluación!</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Registro para el Quiz -->
+    <div id="registration-page" class="container mx-auto hidden fade-in text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-8 text-accent-green">¡Regístrate para la Evaluación!</h2>
+        <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-accent-green max-w-sm mx-auto">
+            <form id="registration-form" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-lg font-bold mb-2 text-text-dark">Nombre del Estudiante:</label>
+                    <input type="text" id="name" class="w-full rounded-full p-3 text-gray-900 border-2 border-transparent focus:border-accent-green focus:outline-none" placeholder="Escribe tu nombre" required>
+                </div>
+                <div>
+                    <label for="course" class="block text-lg font-bold mb-2 text-text-dark">Curso:</label>
+                    <input type="text" id="course" class="w-full rounded-full p-3 text-gray-900 border-2 border-transparent focus:border-accent-green focus:outline-none" placeholder="Escribe tu curso" required>
+                </div>
+                <button type="submit" class="btn btn-quiz w-full text-xl mt-4">Iniciar Evaluación</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pantalla del Quiz -->
+    <div id="quiz-page" class="container mx-auto hidden fade-in text-center">
+        <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-accent-green max-w-xl mx-auto">
+            <p id="quiz-progress" class="text-lg mb-4 font-bold text-accent-green">Pregunta 1 de 10</p>
+            <h3 id="question-text" class="text-xl md:text-2xl font-bold mb-6 text-text-dark"></h3>
+            <div id="options-container" class="grid grid-cols-1 gap-4"></div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="results-page" class="container mx-auto hidden fade-in text-center">
+        <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-accent-green max-w-xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-accent-green">¡Evaluación Terminada!</h2>
+            <p id="final-score" class="text-2xl md:text-4xl font-bold mb-6 text-text-dark">Tu puntuación es: 0/10</p>
+            <p id="score-message" class="text-lg md:text-xl mb-6 text-text-dark"></p>
+            <button id="restart-btn" class="btn btn-start text-xl mt-4">Volver a Intentarlo</button>
+        </div>
+    </div>
+    
+    <div id="message-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-lg text-center shadow-2xl">
+            <p id="modal-text" class="text-text-dark text-lg mb-4"></p>
+            <button id="modal-close-btn" class="bg-accent-green text-white px-4 py-2 rounded-full">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // ¡IMPORTANTE! Reemplaza esta URL con la URL de tu Google Apps Script desplegado
+        const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxy2WKka3yjuWGt0cLUy87V6DfyJtS6QbqaCBhBJeaFYxQ-J4jBTyGj3NMjD4ykX2xp/exec";
+
+        const welcomePage = document.getElementById('welcome-page');
+        const studyPage = document.getElementById('study-page');
+        const registrationPage = document.getElementById('registration-page');
+        const quizPage = document.getElementById('quiz-page');
+        const resultsPage = document.getElementById('results-page');
+
+        const startBtn = document.getElementById('start-btn');
+        const goToQuizBtn = document.getElementById('go-to-quiz-btn');
+        const registrationForm = document.getElementById('registration-form');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const quizProgress = document.getElementById('quiz-progress');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+
+        const messageModal = document.getElementById('message-modal');
+        const modalText = document.getElementById('modal-text');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        let studentName = '';
+        let studentCourse = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswerLocked = false;
+
+        const questions = [
+            {
+                question: "¿En qué estación caen las hojas de los árboles?",
+                options: ["Primavera", "Invierno", "Otoño", "Verano"],
+                answer: "Otoño"
+            },
+            {
+                question: "¿Cuál es la estación más calurosa del año?",
+                options: ["Invierno", "Verano", "Primavera", "Otoño"],
+                answer: "Verano"
+            },
+            {
+                question: "¿En qué estación crecen las flores y los días se hacen más largos?",
+                options: ["Invierno", "Otoño", "Verano", "Primavera"],
+                answer: "Primavera"
+            },
+            {
+                question: "¿En qué estación debemos usar ropa muy abrigada?",
+                options: ["Otoño", "Invierno", "Primavera", "Verano"],
+                answer: "Invierno"
+            },
+            {
+                question: "¿Qué pasa con el clima en otoño?",
+                options: ["Hace mucho calor", "Empieza a hacer más frío", "Llueve mucho", "Hay mucho sol"],
+                answer: "Empieza a hacer más frío"
+            },
+            {
+                question: "¿En qué estación es común que caiga nieve?",
+                options: ["Verano", "Primavera", "Invierno", "Otoño"],
+                answer: "Invierno"
+            },
+            {
+                question: "¿Qué estación es ideal para jugar al aire libre sin abrigarse mucho?",
+                options: ["Invierno", "Primavera", "Otoño", "Verano"],
+                answer: "Verano"
+            },
+            {
+                question: "¿Qué estación se asocia con el renacimiento de las plantas?",
+                options: ["Primavera", "Invierno", "Otoño", "Verano"],
+                answer: "Primavera"
+            },
+            {
+                question: "¿En qué estación los árboles tienen sus hojas de colores: rojo, amarillo y naranja?",
+                options: ["Otoño", "Verano", "Primavera", "Invierno"],
+                answer: "Otoño"
+            },
+            {
+                question: "¿Cuál es una actividad que podemos hacer en verano?",
+                options: ["Hacer un muñeco de nieve", "Ir a la playa", "Recoger hojas secas", "Plantar flores"],
+                answer: "Ir a la playa"
+            }
+        ];
+
+        function showModal(message) {
+            modalText.textContent = message;
+            messageModal.classList.remove('hidden');
+        }
+
+        function showPage(page) {
+            welcomePage.classList.add('hidden');
+            studyPage.classList.add('hidden');
+            registrationPage.classList.add('hidden');
+            quizPage.classList.add('hidden');
+            resultsPage.classList.add('hidden');
+            page.classList.remove('hidden');
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                questionText.textContent = question.question;
+                optionsContainer.innerHTML = '';
+                isAnswerLocked = false;
+                
+                quizProgress.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+
+                const shuffledOptions = question.options.sort(() => Math.random() - 0.5);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-option', 'w-full', 'rounded-full', 'p-4', 'font-bold', 'text-lg', 'shadow-md');
+                    button.addEventListener('click', () => handleAnswer(button, option));
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                showResults();
+            }
+        }
+
+        function handleAnswer(selectedButton, selectedOption) {
+            if (isAnswerLocked) return;
+            isAnswerLocked = true;
+            const currentQuestion = questions[currentQuestionIndex];
+            const isCorrect = selectedOption === currentQuestion.answer;
+            
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                score++;
+            } else {
+                selectedButton.classList.add('incorrect');
+                const correctButton = Array.from(optionsContainer.children).find(btn => btn.textContent === currentQuestion.answer);
+                if (correctButton) {
+                    correctButton.classList.add('correct');
+                }
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 1000);
+        }
+
+        async function showResults() {
+            finalScoreDisplay.textContent = `Tu puntuación es: ${score} de ${questions.length}`;
+            if (score >= 8) {
+                scoreMessage.textContent = "¡Increíble! Eres un experto en las estaciones del año.";
+            } else if (score >= 5) {
+                scoreMessage.textContent = "¡Muy bien! Sigue practicando para ser un experto.";
+            } else {
+                scoreMessage.textContent = "Sigue estudiando, ¡lo harás mejor la próxima vez!";
+            }
+            
+            showPage(resultsPage);
+            await sendDataToGoogleSheets();
+        }
+
+       async function sendDataToGoogleSheets() {
+        if (!GOOGLE_APP_SCRIPT_URL) {
+            console.error("Error: La URL de Google Apps Script no está configurada.");
+            showModal("Error: No se puede guardar la puntuación. Falta la URL del script.");
+            return;
+        }
+
+        // Enviar con FormData porque el Apps Script usa e.parameter
+        const formData = new FormData();
+        formData.append("nombre", studentName);
+        formData.append("curso", studentCourse);
+        formData.append("puntuacion", `${score} de ${questions.length}`);
+
+        try {
+            const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.text(); // Apps Script devuelve "OK"
+            console.log("Respuesta del servidor:", result);
+
+            if (result === "OK") {
+                console.log("✅ Datos guardados en Google Sheets.");
+            } else {
+                showModal("⚠️ Hubo un problema al guardar los datos.");
+            }
+        } catch (error) {
+            console.error("Error al enviar los datos:", error);
+            showModal("❌ Error al guardar la puntuación. Inténtalo de nuevo.");
+        }
+      }
+
+
+        startBtn.addEventListener('click', () => showPage(studyPage));
+        goToQuizBtn.addEventListener('click', () => showPage(registrationPage));
+
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            studentName = document.getElementById('name').value;
+            studentCourse = document.getElementById('course').value;
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            displayQuestion();
+            showPage(quizPage);
+        });
+
+        restartBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            showPage(welcomePage);
+        });
+
+        modalCloseBtn.addEventListener('click', () => messageModal.classList.add('hidden'));
+
+    </script>
+</body>
+</html>
