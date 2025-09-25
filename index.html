@@ -359,41 +359,41 @@
         }
 
        async function sendDataToGoogleSheets() {
-    if (!GOOGLE_APP_SCRIPT_URL) {
-        console.error("Error: La URL de Google Apps Script no está configurada.");
-        showModal("Error: No se puede guardar la puntuación. Falta la URL del script.");
-        return;
-    }
-
-    // Asegurarnos de capturar los valores correctos
-    const data = {
-        nombre: studentName || document.getElementById("name").value,
-        curso: studentCourse || document.getElementById("course").value,
-        puntuacion: `${score} de ${questions.length}`
-    };
-
-    try {
-        const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        console.log("Respuesta del servidor:", result);
-
-        if (result.status === "success") {
-            console.log("✅ Datos guardados en Google Sheets.");
-        } else {
-            showModal("⚠️ Hubo un problema al guardar los datos.");
+            if (!GOOGLE_APP_SCRIPT_URL) {
+                console.error("Error: La URL de Google Apps Script no está configurada.");
+                showModal("Error: No se puede guardar la puntuación. Falta la URL del script.");
+                return;
+            }
+        
+            // Asegurarnos de capturar los valores correctos
+            const data = {
+                nombre: studentName || document.getElementById("name").value,
+                curso: studentCourse || document.getElementById("course").value,
+                puntuacion: `${score} de ${questions.length}`
+            };
+        
+            try {
+                const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data)
+                });
+        
+                const result = await response.json();
+                console.log("Respuesta del servidor:", result);
+        
+                if (result.status === "success") {
+                    console.log("✅ Datos guardados en Google Sheets.");
+                } else {
+                    showModal("⚠️ Hubo un problema al guardar los datos.");
+                }
+            } catch (error) {
+                console.error("Error al enviar los datos:", error);
+                showModal("❌ Error al guardar la puntuación. Inténtalo de nuevo.");
+            }
         }
-    } catch (error) {
-        console.error("Error al enviar los datos:", error);
-        showModal("❌ Error al guardar la puntuación. Inténtalo de nuevo.");
-    }
-}
 
 
 
